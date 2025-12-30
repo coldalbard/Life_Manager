@@ -9,11 +9,11 @@ class TaskViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     queryset = Task.objects.all()
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ['is_completed', 'due_date']
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['status', 'priority', 'is_completed', 'due_date']
     search_fields = ['title', 'description']
-    ordering_fields = ['due_date', 'created_at']
-    ordering = ['-created-at']
+    ordering_fields = ['due_date', 'created_at', 'priority']
+    ordering = ['created-at']
 
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
