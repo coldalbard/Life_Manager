@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+
+<h2>Вход</h2>
+
+<input type="text" id="username" placeholder="Username">
+<input type="password" id="password" placeholder="Password">
+<button onclick="login()">Войти</button>
+
+<script>
+async function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const response = await fetch('http://127.0.0.1:8000/api/v1/token/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await response.json();
+
+    if (data.access) {
+        localStorage.setItem('token', data.access);  // 💾 сохраняем
+        window.location.href = 'app.html';           // 🔁 редирект
+    } else {
+        alert("Ошибка входа");
+        console.log(data);
+    }
+}
+</script>
+
+</body>
+</html>

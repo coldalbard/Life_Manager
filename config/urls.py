@@ -27,13 +27,18 @@ schema_view = get_schema_view(openapi.Info(title="Life Manager API",
                               permission_classes=[permissions.AllowAny, ], authentication_classes=[])
 
 urlpatterns = [
+    # Admin
     path('admin/', admin.site.urls),
-    path('api/', include('apps.tasks.urls')),
-    path('api/users/', include('apps.users.urls')),
+
+    # Tasks
+    path('api/v1/', include('apps.tasks.urls')),
+
+    # Users
+    path('api/v1/users/', include('apps.users.urls')),
 
     # JWT
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     # Swagger UI
     path('swagger.json',
